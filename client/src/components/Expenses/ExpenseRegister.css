@@ -1,0 +1,60 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+    font-size: 36px;
+    color: #1B1B1D;
+    letter-spacing: -1px;
+}
+
+p{
+    font-size: 16px;
+    color: #1B1B1D;
+    letter-spacing: -0.5px;
+}
+
+.form-control {
+    background: #EEF7F6;
+    border: none;
+    padding: 14px 20px;
+    font-size: 12px;
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(238, 247, 246);
+}
+
+.sign-up {
+    border: none;
+    padding: 14px 20px;
+    font-size: 14px;
+    background: #0C7D81;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active, .btn:hover {
+    background: #095f62;
+    border: none;
+}
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+    color: var(--bs-btn-disabled-color);
+    pointer-events: none;
+    background-color: #095f62;
+    border: none;
+    opacity: var(--bs-btn-disabled-opacity);
+}
+
+a{
+    color: #0C7D81;
+    text-decoration: none;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+  }

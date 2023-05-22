@@ -1,0 +1,9 @@
+.card{
+  border-radius: 4px;
+  border:none;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+}
+
+.container { 
+  overflow: hidden;
+}

@@ -1,0 +1,71 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+}
+
+h1 {
+  font-size: 36px;
+  color: #1b1b1d;
+}
+
+.card-detail {
+  border-radius: 10px;
+  background-color: #eef7f6;
+}
+
+.btn-go-dashboard {
+  background-color: #0c7d81;
+  color: white;
+}
+
+.btn-go-dashboard:hover {
+  color: white;
+}
+
+.desc-product {
+  display: -webkit-box;
+  max-width: 95%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: justify;
+}
+
+@media only screen and (max-width: 1400px) {
+  .card-detail {
+    
+  }
+}
+
+@media only screen and (max-width: 1196px) {
+  .card-detail {
+    
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .card-detail {
+    height: 27rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .img-detail {
+    width: 60%;
+  }
+
+  .card-detail {
+    height: 40rem;
+    text-align: center;
+  }
+
+  .product-detail {
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .card-detail {
+    height: 37rem;
+    text-align: center;
+  }
+}
