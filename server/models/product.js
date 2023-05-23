@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 10,
       },
       image: DataTypes.TEXT,
+      description: DataTypes.TEXT,
+      date: DataTypes.DATE,
       warehouseId: DataTypes.INTEGER,
     },
     {

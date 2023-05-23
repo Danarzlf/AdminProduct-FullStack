@@ -9,9 +9,11 @@ const ExpenseFormUpdate = () => {
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
   const [image, setImage] = useState("");
-  const [imageFile, setImageFile] = useState(null); // Menambahkan state imageFile
+  const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null); // Menambahkan state previewImage
+  const [previewImage, setPreviewImage] = useState(null);
+  const [date, setDate] = useState(""); // State for date
+  const [description, setDescription] = useState(""); // State for description
 
   const params = useParams();
 
@@ -21,12 +23,15 @@ const ExpenseFormUpdate = () => {
     axios
       .get(`http://localhost:8000/api/v1/products/${params.id}`, { headers })
       .then(function (response) {
-        const { name, price, stock, image } = response.data.data.product;
+        const { name, price, stock, image, date, description } =
+          response.data.data.product;
         setName(name);
         setPrice(price);
         setStock(stock);
         setImage(image);
-        setPreviewImage(image); // Mengatur previewImage saat melakukan fetch data
+        setPreviewImage(image);
+        setDate(date); // Set the date state
+        setDescription(description); // Set the description state
       })
       .catch(function (error) {
         console.log(error.message);
@@ -40,7 +45,7 @@ const ExpenseFormUpdate = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
-    setPreviewImage(URL.createObjectURL(file)); // Mengatur previewImage saat memilih gambar baru
+    setPreviewImage(URL.createObjectURL(file));
   };
 
   const handleSubmit = (event) => {
@@ -51,13 +56,13 @@ const ExpenseFormUpdate = () => {
       name: name,
       price: price,
       stock: stock,
+      date: date, // Add date to updatedData object
+      description: description, // Add description to updatedData object
     };
 
-    // Membuat objek FormData dan menambahkan data gambar
     const formData = new FormData();
     formData.append("image", imageFile);
 
-    // Menambahkan data lainnya ke dalam FormData
     Object.keys(updatedData).forEach((key) => {
       formData.append(key, updatedData[key]);
     });
@@ -87,7 +92,7 @@ const ExpenseFormUpdate = () => {
   return (
     <Container>
       <h1>Product Update</h1>
-      <p className="mb-5">Update your product in here!!!</p>
+      <p className="mb-5">Update your product here!!!</p>
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
           <Form.Label column sm={2}>
@@ -125,6 +130,35 @@ const ExpenseFormUpdate = () => {
             />
           </Col>
         </Form.Group>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalDate">
+          <Form.Label column sm={2}>
+            Date
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group
+          as={Row}
+          className="mb-3"
+          controlId="formHorizontalDescription"
+        >
+          <Form.Label column sm={2}>
+            Description
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+          </Col>
+        </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalImage">
           <Form.Label column sm={2}>
             Image File
@@ -140,18 +174,17 @@ const ExpenseFormUpdate = () => {
         </div>
         <br />
         <Form.Group>
-          <button
+          <Button
             className="btn btn-primary lg sign-up fw-bold me-3"
             type="submit"
             disabled={isLoading}
           >
             {isLoading ? "Please Wait..." : "Update"}
-          </button>
-
-          <Link to={"http://localhost:3000/dashboard"}>
-            <button className="btn btn-primary lg sign-up fw-bold">
+          </Button>
+          <Link to="/dashboard">
+            <Button className="btn btn-primary lg sign-up fw-bold">
               Cancel
-            </button>
+            </Button>
           </Link>
         </Form.Group>
       </Form>

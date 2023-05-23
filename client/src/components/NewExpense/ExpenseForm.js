@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import "./ExpenseForm.css";
@@ -8,7 +8,11 @@ const ExpenseForm = (props) => {
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredStock, setEnteredStock] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Menambahkan state isLoading
+  const [previewImage, setPreviewImage] = useState(null);
+  const [enteredDate, setEnteredDate] = useState(""); // New state for date
+  const [enteredDescription, setEnteredDescription] = useState(""); // New state for description
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const titleChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -22,20 +26,52 @@ const ExpenseForm = (props) => {
     setEnteredStock(event.target.value);
   };
 
+  const dateChangeHandler = (event) => {
+    setEnteredDate(event.target.value);
+  };
+
+  const descriptionChangeHandler = (event) => {
+    setEnteredDescription(event.target.value);
+  };
+
   const fileChangeHandler = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    setIsLoading(true); // Mengatur isLoading menjadi true saat mulai submit
+    if (
+      enteredName.trim() === "" ||
+      enteredAmount.trim() === "" ||
+      enteredStock.trim() === "" ||
+      selectedFile === null ||
+      enteredDate.trim() === "" || // Check if date field is empty
+      enteredDescription.trim() === "" // Check if description field is empty
+    ) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
 
     const formData = new FormData();
     formData.append("name", enteredName);
     formData.append("price", enteredAmount);
     formData.append("stock", enteredStock);
     formData.append("image", selectedFile);
+    formData.append("date", enteredDate); // Append date to form data
+    formData.append("description", enteredDescription); // Append description to form data
 
     try {
       const token = localStorage.getItem("token");
@@ -45,15 +81,20 @@ const ExpenseForm = (props) => {
         formData,
         { headers }
       );
-      console.log(response.data); // Tindakan lanjutan setelah berhasil menyimpan data ke backend
+      console.log(response.data);
 
       setEnteredName("");
       setEnteredAmount("");
       setEnteredStock("");
       setSelectedFile(null);
+      setPreviewImage(null);
+      setEnteredDate(""); // Clear date field
+      setEnteredDescription(""); // Clear description field
       window.location.href = "/dashboard";
     } catch (error) {
-      console.error(error); // Tindakan lanjutan jika terjadi error saat mengirim data ke backend
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,8 +130,23 @@ const ExpenseForm = (props) => {
           />
         </div>
         <div className="new-expense__control">
+          <label>Date</label>
+          <input type="date" value={enteredDate} onChange={dateChangeHandler} />
+        </div>
+        <div className="new-expense__control">
+          <label>Description</label>
+          <textarea
+            rows="3"
+            value={enteredDescription}
+            onChange={descriptionChangeHandler}
+          ></textarea>
+        </div>
+        <div className="new-expense__control">
           <label>Image</label>
           <input type="file" onChange={fileChangeHandler} />
+          {previewImage && (
+            <img src={previewImage} alt="Preview" className="image-preview" />
+          )}
         </div>
       </div>
       <div className="new-expense__actions">
@@ -101,6 +157,7 @@ const ExpenseForm = (props) => {
           {isLoading ? "Please Wait..." : "Add Product"}
         </button>
       </div>
+      {error && <p className="error-message">{error}</p>}
     </form>
   );
 };

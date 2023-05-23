@@ -7,8 +7,6 @@ import ExpensesChart from "./ExpensesChart";
 import "./Expenses.css";
 
 const Expenses = (props) => {
-  
-
   const [filteredYear, setFilteredYear] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -42,15 +40,13 @@ const Expenses = (props) => {
 
   return (
     <div className="container">
-      
-        <ExpensesFilter
-          selected={filteredYear}
-          onChangeFilter={filterChangeHandler}
-          onSearch={searchChangeHandler}
-        />
-        {/* <ExpensesChart expenses={filteredExpenses}  /> */}
-        <ExpensesList items={filteredExpenses} />
-      
+      <ExpensesFilter
+        selected={filteredYear}
+        onChangeFilter={filterChangeHandler}
+        onSearch={searchChangeHandler}
+      />
+      {/* <ExpensesChart expenses={filteredExpenses}  /> */}
+      <ExpensesList items={filteredExpenses} />
     </div>
   );
 };

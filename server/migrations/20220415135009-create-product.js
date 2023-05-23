@@ -23,6 +23,14 @@ module.exports = {
       image: {
         type: Sequelize.TEXT,
       },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      date: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
       warehouseId: {
         type: Sequelize.INTEGER,
       },

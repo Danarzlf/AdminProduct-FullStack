@@ -22,6 +22,8 @@ const ExpensesList = (props) => {
                   id={expense.id}
                   title={expense.name}
                   amount={expense.price}
+                  description={expense.description}
+                  dateee={expense.date}
                   date={expense.createdAt}
                   datee={expense.updatedAt}
                   image={expense.image}

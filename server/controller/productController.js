@@ -7,7 +7,7 @@ const catchAsync = require("../utils/catchAsync");
 const ApiError = require("../utils/ApiError");
 
 const createProduct = catchAsync(async (req, res) => {
-  const { name, price, stock } = req.body;
+  const { name, price, stock, description, date } = req.body;
   const file = req.file;
 
   // validasi utk format file image
@@ -35,6 +35,8 @@ const createProduct = catchAsync(async (req, res) => {
     price,
     stock,
     image: img.url,
+    description,
+    date,
   });
 
   res.status(201).json({
@@ -113,7 +115,7 @@ const findProductById = catchAsync(async (req, res) => {
 });
 
 const updateProduct = catchAsync(async (req, res) => {
-  const { name, price, stock } = req.body;
+  const { name, price, stock, description, date } = req.body;
   const id = req.params.id;
   const file = req.file;
 
@@ -150,6 +152,8 @@ const updateProduct = catchAsync(async (req, res) => {
         name,
         price,
         stock,
+        description,
+        date,
         image: img.url,
       },
       {
@@ -165,6 +169,8 @@ const updateProduct = catchAsync(async (req, res) => {
         name,
         price,
         stock,
+        description,
+        date,
       },
       {
         where: {
@@ -181,6 +187,8 @@ const updateProduct = catchAsync(async (req, res) => {
       name,
       price,
       stock,
+      description,
+      date,
     },
   });
 });
