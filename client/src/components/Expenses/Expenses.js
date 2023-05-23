@@ -45,7 +45,7 @@ const Expenses = (props) => {
         onChangeFilter={filterChangeHandler}
         onSearch={searchChangeHandler}
       />
-      {/* <ExpensesChart expenses={filteredExpenses}  /> */}
+      {/* <ExpensesChart expenses={filteredExpenses} /> */}
       <ExpensesList items={filteredExpenses} />
     </div>
   );
